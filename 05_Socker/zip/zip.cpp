@@ -27,13 +27,13 @@ void decompressFolder(const std::string& compressedFile, const std::string& outp
 
 int main() {
     // 压缩文件夹下所有文件到一个 tar.gz 压缩包中
-    const std::string inputFolder = "/home/zjh/thread/";
+    const std::string inputFolder = "../tmp/send_file/";
     const std::string compressedFile = "compressed_file.tar.gz";
 
     compressFolder(inputFolder, compressedFile);
 
     // 解压缩 tar.gz 压缩包到指定文件夹
-    const std::string outputFolder = "/path/to/your/output/folder/";
+    const std::string outputFolder = "../tmp/recv_file/";
     decompressFolder(compressedFile, outputFolder);
 
     return 0;

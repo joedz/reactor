@@ -24,7 +24,7 @@ int main() {
     std::cout << "Connected to server." << std::endl;
     
     // 发送文件名
-    char fileName[] = "/root/ReactorLib/05_socker/tmp/send_file";
+    char fileName[] = "../tmp/send_file";
     send(clientSocket, fileName, strlen(fileName) + 1, 0);  // 注意 +1
 
 
@@ -39,7 +39,7 @@ int main() {
     std::cout << "Received file name 1: " << fileName1 << std::endl;
 
     // 打开文件
-    std::ofstream outputFile("/root/ReactorLib/05_socker/tmp/recv_file/recv.zip", std::ios::out | std::ios::binary);
+    std::ofstream outputFile("../tmp/recv_file/recv.zip", std::ios::out | std::ios::binary);
     if (!outputFile.is_open()) {
         std::cerr << "Error opening file." << std::endl;
         close(clientSocket);

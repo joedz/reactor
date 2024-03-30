@@ -9,7 +9,7 @@
 #include <dirent.h>
 #include "zip2.h"
 
-#define ALLOWED_IP "192.168.5.140"  // 你允许的客户端 IP 地址
+#define ALLOWED_IP "127.0.0.1"  // 你允许的客户端 IP 地址
 #define PORT 8080
 
 // g++ -o Server_file Server_file.cpp zip2.cpp -L/usr/local/lib/libarchive.so.20 -larchive
@@ -18,8 +18,8 @@
 void listDirectories(int newSocket,const char** argv) {
     
     minitar(sizeof(argv), argv);
-    std::cout << "Received file name: " << "thread.tar" << std::endl;
-    std::ifstream inputFile("thread.tar", std::ios::in | std::ios::binary);
+    std::cout << "Received file name: " << "ServerTmp.tar" << std::endl;
+    std::ifstream inputFile("ServerTmp.tar", std::ios::in | std::ios::binary);
     if (!inputFile.is_open()) {
         std::cerr << "Error opening file." << std::endl;
         close(newSocket);
@@ -86,11 +86,13 @@ int main() {
     size_t dirSize = directory.size() + 1;
     send(newSocket, &dirSize, sizeof(dirSize), 0);
     send(newSocket, directory.c_str(), dirSize, 0);
+
+    
     //压缩
     const char *chis[] = { 
         "./zip2",
         "-czf",
-        "thread.tar",
+        "ServerTmp.tar",
         fileName,
         NULL  // 参数数组的末尾必须为NULL
     };

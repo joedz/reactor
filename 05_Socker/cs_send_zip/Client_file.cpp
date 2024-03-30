@@ -17,15 +17,20 @@ int main() {
     struct sockaddr_in serverAddress;
     serverAddress.sin_family = AF_INET;
     serverAddress.sin_port = htons(PORT);
-    inet_pton(AF_INET, "127.0.0.1", &serverAddress.sin_addr);
+    // inet_pton(AF_INET, "127.0.0.1", &serverAddress.sin_addr);
+    serverAddress.sin_addr.s_addr = inet_addr("127.0.0.1");
 
     // 连接到服务器
-    connect(clientSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress));
+
+    if (connect(clientSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress)) != 0) {
+        perror (" connect ");
+    }
 
     std::cout << "Connected to server." << std::endl;
 
+
     // 发送文件夹路径
-    char fileName[] = "/root/ReactorLib/05_socker/tmp/send_file";
+    char fileName[] = "../tmp/send_file";
     send(clientSocket, fileName, strlen(fileName) + 1, 0);  // 注意 +1
 
     // 接收端
@@ -39,7 +44,7 @@ int main() {
     std::cout << "Received file name 1: " << fileName1 << std::endl;
 
     // 打开文件
-    std::ofstream outputFile("/root/ReactorLib/05_socker/tmp/recv_file/recv.tar", std::ios::out | std::ios::binary);
+    std::ofstream outputFile("ClientTmp.tar", std::ios::out | std::ios::binary);
     if (!outputFile.is_open()) {
         std::cerr << "Error opening file." << std::endl;
         close(clientSocket);
@@ -53,20 +58,22 @@ int main() {
         // std::cout << "在里面" << std::endl;
         outputFile.write(buffer, bytesRead);
     }
+    outputFile.close();
+
     //解压
     const char *argt[] = { 
         "./zip2",
         "-xf",
-        "recv.tar",
+        "ClientTmp.tar",
         NULL  // 参数数组的末尾必须为NULL
     };
     minitar(sizeof(argt), argt);
 
     std::cout << "File sent successfully." << std::endl;
 
-    // 关闭套接字和文件
-    close(clientSocket);
-    outputFile.close();
+    // // 关闭套接字和文件
+    // close(clientSocket);
+    // 
 
     return 0;
 }

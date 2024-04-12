@@ -74,7 +74,24 @@ void test_logManager() {
 
 }
 
+string tostring() {
+    std::string str(64, '0');
+
+    printf("%p\n", str.c_str());
+
+    return str;
+}
+
 int main() {
+    int *p = new int;
+    int p1;
+    std::string str = tostring();
+
+    printf("%p\n ", str.c_str());
+    printf("%p\n ", p);
+    printf("%p\n ", &p1);
+
+
     // std::cout << " xxx error" << std::endl;
 
     // std::cout << __FILE__ << ":" << __LINE__ << std::endl;
@@ -103,7 +120,6 @@ int main() {
     // test_logManager();
 
     Logger::ptr logger = LogManager::getInstance()->getLogger("main");
-
     LOG_DEBUG(logger) << "hello world";
 
 

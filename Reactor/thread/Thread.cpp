@@ -34,11 +34,29 @@ pthread_t GetThreadId() {
     return pthread_self();
 }
 
+Thread::Thread() {
+    if (!t_thread) {
+        InitMainThread();
+    }
+}
+
+void Thread::InitMainThread() {
+    m_name = "main";
+    m_cb = nullptr;
+    m_tid = tid();
+    m_threadId = 0;
+    t_threadName = m_name;
+}
+
 const std::string& Thread::GetName() {
     return t_threadName;
 }
 
 Thread* Thread::GetThis() {
+    if (t_thread) {
+        return t_thread;
+    }
+    t_thread = new Thread();
     return t_thread;
 }
 

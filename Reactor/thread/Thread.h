@@ -14,6 +14,7 @@
 #include "../utils/Noncopyable.h"
 
 namespace Reactor {
+extern  int tid();
 
 class Thread : public Noncopyable {
 public:
@@ -127,6 +128,16 @@ private:
      * @brief 子线程执行函数，内部执行m_cb
     */
     static void* run(void *arg);
+
+    /**
+     * @brief 默认构造函数，私有外部不可以访问
+    */
+    Thread();
+
+    /**
+     * @brief 初始化主线程
+    */
+    void InitMainThread();
 
 private:
 

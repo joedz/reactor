@@ -8,7 +8,7 @@
 
 namespace RELog {
 
-std::string LogFormatterStringDefault = "%D{%y-%m-%d %H:%M:%S} [%c] [%P] %N %t %f:%L %e %E %T%m%n";
+std::string LogFormatterStringDefault = "%D{%y-%m-%d %H:%M:%S} %N %t [L-%c] [%P] %f:%L %e %E %T%m%n";
 
 LogFormatter::ptr LogFormatterDefault = std::make_shared<LogFormatter>(LogFormatterStringDefault);
 
